@@ -3,14 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
   devtool: 'inline-source-map',
   devServer: {
@@ -23,19 +23,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'React with Webpack',
       template: path.join(__dirname, 'public', 'index.html'),
+      favicon: './public/favicon.ico',
     }),
   ],
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
+        use: ['babel-loader'],
+        // use: {
+        //   loader: 'babel-loader',
+        //   options: {
+        //     presets: ['@babel/preset-env', '@babel/react', '@babel/typescript'],
+        //   },
+        // },
       },
       {
         test: /\.css$/i,
@@ -49,7 +51,6 @@ module.exports = {
   },
   optimization: {
     moduleIds: 'deterministic',
-    runtimeChunk: 'single',
     splitChunks: {
       cacheGroups: {
         vendor: {
