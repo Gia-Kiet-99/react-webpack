@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import LoadingIndicator from './component/LoadingIndicator';
 
-interface Person {
-  name: string,
-  age: number,
-}
+const Menu = React.lazy(() => import('./component/Menu'));
 
 function App() {
-  const person: Person = {
-    name: 'dinh gia kiet',
-    age: 22,
-  };
   return (
     <div>
-      <header>
-        <h1>Hello World, {person.name}</h1>
-      </header>
+      <LoadingIndicator />
     </div>
+    // <Suspense fallback={<LoadingIndicator />}>
+    //   <Menu />
+    // </Suspense>
   );
 }
 
